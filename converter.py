@@ -32,7 +32,7 @@ def entry_from_transaction(txn: models.Transaction) -> bean.Transaction:
 def entry_from_posting(posting: models.Posting) -> bean.Posting:
     return bean.Posting(
         posting.account_path,
-        bean.Amount(bean.D(posting.amount.quantity), posting.amount.unit),
+        bean.Amount(posting.amount.quantity, posting.amount.unit),
         None,  # Cost / CostSpec
         None,  # Price
         None,  # Flag

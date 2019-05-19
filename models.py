@@ -21,8 +21,7 @@ from dataclasses import dataclass
 from typing import Optional, Any, List, TypeVar, Type, cast, Callable
 from datetime import datetime
 from enum import Enum
-import dateutil.parser
-
+from utils import from_decimal, to_decimal, from_datetime, Decimal
 
 T = TypeVar("T")
 EnumT = TypeVar("EnumT", bound=Enum)
@@ -45,20 +44,6 @@ def from_union(fs, x):
         except:
             pass
     assert False
-
-
-def from_datetime(x: Any) -> datetime:
-    return dateutil.parser.parse(x)
-
-
-def from_float(x: Any) -> float:
-    assert isinstance(x, (float, int)) and not isinstance(x, bool)
-    return float(x)
-
-
-def to_float(x: Any) -> float:
-    assert isinstance(x, float)
-    return x
 
 
 def to_class(c: Type[T], x: Any) -> dict:
@@ -153,19 +138,19 @@ class Flag(Enum):
 
 @dataclass
 class Amount:
-    quantity: float
+    quantity: Decimal
     unit: str
 
     @staticmethod
     def from_dict(obj: Any) -> 'Amount':
         assert isinstance(obj, dict)
-        quantity = from_float(obj.get("quantity"))
+        quantity = from_decimal(obj.get("quantity"))
         unit = from_str(obj.get("unit"))
         return Amount(quantity, unit)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["quantity"] = to_float(self.quantity)
+        result["quantity"] = to_decimal(self.quantity)
         result["unit"] = from_str(self.unit)
         return result
 

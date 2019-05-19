@@ -1,12 +1,9 @@
-import json
-
 from models import ledger_from_dict
 from converter import entries_from_ledger
-from beancount.parser import printer
+from utils import json_load_decimal, print_entries
 
-ledger = ledger_from_dict(json.load(open("./pta.local.json", "r")))
+ledger = ledger_from_dict(json_load_decimal(open("./pta.local.json", "r")))
 entries = entries_from_ledger(ledger)
 
-for entry in entries:
-    printer.print_entry(entry)
+print(print_entries(list(entries)))
 
