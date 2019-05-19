@@ -1,7 +1,7 @@
 import models
 from beancount.core import data as bean
 from itertools import chain
-
+from datetime import date
 
 def entries_from_ledger(ledger: models.Ledger) -> bean.Entries:
     return chain(
@@ -12,7 +12,12 @@ def entries_from_ledger(ledger: models.Ledger) -> bean.Entries:
 
 def entry_from_account(account: models.Account) -> bean.Open:
     return bean.Open(
-        bean.new_metadata("", 0), account.open_date, account.path, [], None
+        bean.new_metadata("", 0),
+        # account.open_date,
+        date.fromisoformat('2005-11-22'), # Temp hack until we fix open date
+        account.path,
+        [],
+        None,
     )
 
 
