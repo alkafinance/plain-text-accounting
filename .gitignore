@@ -1,4 +1,4 @@
-*.bean
+*.gen.bean
 *.json
 
 # Byte-compiled / optimized / DLL files

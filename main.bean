@@ -1,0 +1,12 @@
+
+option "operating_currency" "USD"
+option "operating_currency" "CAD"
+
+
+include "./tony.gen.bean"
+
+
+* TODO Commodity Directives / Account Commodities
+* TODO GraphQL request within Python
+* TODO Add some labels and post result back
+
