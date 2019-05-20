@@ -219,8 +219,10 @@ class Transaction:
 
 
 @dataclass
+@dataclass
 class Ledger:
     accounts: List[Account]
+    commodities: List[Commodity]
     date: datetime
     id: str
     tags: List[Tag]
@@ -231,16 +233,18 @@ class Ledger:
     def from_dict(obj: Any) -> 'Ledger':
         assert isinstance(obj, dict)
         accounts = from_list(Account.from_dict, obj.get("accounts"))
+        commodities = from_list(Commodity.from_dict, obj.get("commodities"))
         date = from_datetime(obj.get("date"))
         id = from_str(obj.get("id"))
         tags = from_list(Tag.from_dict, obj.get("tags"))
         title = from_str(obj.get("title"))
         transactions = from_list(Transaction.from_dict, obj.get("transactions"))
-        return Ledger(accounts, date, id, tags, title, transactions)
+        return Ledger(accounts, commodities, date, id, tags, title, transactions)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["accounts"] = from_list(lambda x: to_class(Account, x), self.accounts)
+        result["commodities"] = from_list(lambda x: to_class(Commodity, x), self.commodities)
         result["date"] = self.date.isoformat()
         result["id"] = from_str(self.id)
         result["tags"] = from_list(lambda x: to_class(Tag, x), self.tags)

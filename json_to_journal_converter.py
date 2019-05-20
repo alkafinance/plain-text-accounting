@@ -3,9 +3,11 @@ from beancount.core import data as bean
 from itertools import chain
 from datetime import date
 
+
 def entries_from_ledger(ledger: models.Ledger) -> bean.Entries:
     return chain(
         map(entry_from_account, ledger.accounts),
+        map(entry_from_commodity, ledger.commodities),
         map(entry_from_transaction, ledger.transactions),
     )
 
@@ -14,10 +16,18 @@ def entry_from_account(account: models.Account) -> bean.Open:
     return bean.Open(
         bean.new_metadata("", 0),
         # account.open_date,
-        date.fromisoformat('2005-11-22'), # Temp hack until we fix open date
+        date.fromisoformat("2000-01-01"),  # Temp hack until we fix open date
         account.path,
         [],
         None,
+    )
+
+
+def entry_from_commodity(commodity: models.Commodity) -> bean.Commodity:
+    return bean.Commodity(
+        bean.new_metadata("", 0, {'name': commodity.name}),
+        date.fromisoformat("2000-01-01"),
+        commodity.unit,
     )
 
 

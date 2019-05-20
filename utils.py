@@ -6,6 +6,7 @@ from datetime import datetime
 
 import dateutil.parser
 import json
+import simplejson as simplejson
 
 
 class DecimalEncoder(json.JSONEncoder):
@@ -38,7 +39,7 @@ def json_load_decimal(fp) -> Any:
 
 
 def json_dumps_decimal(obj):
-    json.dumps(obj, cls=DecimalEncoder)
+    return simplejson.dumps(obj, use_decimal=True)
 
 
 def print_entries(entries: Entries):

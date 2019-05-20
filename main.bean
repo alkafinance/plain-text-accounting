@@ -5,8 +5,13 @@ option "operating_currency" "CAD"
 
 include "./tony.gen.bean"
 
-
-* TODO Commodity Directives / Account Commodities
-* TODO GraphQL request within Python
+** High
 * TODO Add some labels and post result back
+* TODO GraphQL request within Python
+
+** Mid
+* TODO One file per account
+
+** Low
+* TODO Support custom commodities
 
