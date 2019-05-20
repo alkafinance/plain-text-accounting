@@ -42,7 +42,9 @@ def json_dumps_decimal(obj):
     return simplejson.dumps(obj, use_decimal=True)
 
 
+DISPLAY_CONTEXT = DisplayContext()
+DISPLAY_CONTEXT.commas = True
+
+
 def print_entries(entries: Entries):
-    dc = DisplayContext()
-    dc.commas = True
-    printer.print_entries(entries, dcontext=dc)
+    printer.print_entries(entries, dcontext=DISPLAY_CONTEXT)
