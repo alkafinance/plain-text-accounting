@@ -31,6 +31,7 @@ def entries_to_dir(entries: bean.Entries):
         dirname = os.path.dirname(path)
         if os.path.exists(dirname) == False:
             os.makedirs(dirname, exist_ok=True)
+        es.reverse()
         printer.print_entries(es, dcontext=DISPLAY_CONTEXT, file=open(path, "w"))
 
     index_file = open(index_path, "a")
