@@ -1,9 +1,9 @@
 
 option "operating_currency" "USD"
-option "operating_currency" "CAD"
+; option "operating_currency" "CAD"
 
 
-include "./tony.gen.bean"
+include "./journal/index.bean"
 
 ** High
 * TODO Add some labels and post result back
