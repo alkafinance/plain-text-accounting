@@ -21,7 +21,7 @@ from dataclasses import dataclass
 from typing import Optional, Any, List, TypeVar, Type, cast, Callable
 from datetime import datetime
 from enum import Enum
-from utils import from_decimal, to_decimal, from_datetime, Decimal
+from .utils import from_decimal, to_decimal, from_datetime, Decimal
 
 T = TypeVar("T")
 EnumT = TypeVar("EnumT", bound=Enum)

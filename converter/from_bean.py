@@ -1,4 +1,4 @@
-import models
+from . import models
 from beancount.core import data as bean
 from itertools import chain
 from datetime import date, datetime, time
