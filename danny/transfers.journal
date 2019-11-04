@@ -1,0 +1,30 @@
+
+# Checking -> Saving, both connected to Alka
+
+## Currently
+
+# 2019-11-01 SIMPLE XFERS CR XIAO TONY WEB ID: 27-1328799
+#   Account::Checking::Chase  $1000
+#   Category::Money In::Transfer::Credit
+
+# 2019-11-01 Transfer to Chase - Checking 322271627
+#   Account::Checking::Simple  -$1000
+#   Category::Money Out::Transfer::Debit
+
+## Intermediate
+
+2019-11-01 SIMPLE XFERS CR XIAO TONY WEB ID: 27-1328799
+  Account::Checking::Chase  $1000
+  Account::Money In Transit
+
+2019-11-01 Transfer to Chase - Checking 322271627
+  Account::Checking::Simple  -$1000
+  Account::Money In Transit
+
+## Desired (Hard)
+
+# 2019-11-01 Transfer from Simple -> Chase
+#   Account::Checking::Chase  $1000  ; 2019-11-02, SIMPLE XFERS CR XIAO TONY WEB ID: 27-1328799
+#   Account::Checking::Simple  -$1000  ; 2019-11-01, Transfer to Chase - Checking 322271627
+
+
