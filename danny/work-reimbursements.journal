@@ -1,0 +1,58 @@
+
+# Today
+
+2019-11-04 Instant Transfer to Hallie Saber
+  Account::Checking::Simple  -$2000
+  Category::Money Out::Transfer::Debit  
+
+
+2019-11-18 GUSTO EBV 157780 PPD ID: 9138864003
+  Account::Checking::Chase  $5788
+  Category::Money In::Transfer::Payroll
+
+
+# Next step
+
+2019-11-04 Instant Transfer to Hallie Saber
+  Account::Checking::Simple  -$2000
+  Account::Reimbursement Receivables  $2000
+
+2019-11-18 GUSTO EBV 157780 PPD ID: 9138864003
+  Account::Checking::Chase  $5788
+  Account::Reimbursement Receivables  -$2000
+  Category::Income::Payroll  
+
+# Desired (after Gusto integration)
+
+## Step 1
+
+2019-11-04 Instant Transfer to Hallie Saber
+  Account::Checking::Simple  -$2000
+  Account::Reimbursement Receivables  $2000
+
+
+2019-11-18 GUSTO EBV 157780 PPD ID: 9138864003
+  Account::Checking::Chase  $5788
+  Account::Money In Transit
+
+2019-11-18 Paystub for period Nov 1 - Nov 15
+  Category::Income::Salary  -$6788
+  Category::Expense::Federal Taxes  $2000
+  Category::Expense::State Taxes  $1000
+  Account::Reimbursement Receivables  -$2000
+  Account::Money In Transit
+
+## Step 2
+
+2019-11-04 Instant Transfer to Hallie Saber
+  ; link-id: exp-report-123
+  Account::Checking::Simple  -$2000
+  Account::Reimbursement Receivables  $2000
+
+2019-11-18 Paystub for period Nov 1 - Nov 15 
+  ; link-id: exp-report-123
+  Category::Income::Salary  -$6788
+  Category::Expense::Federal Taxes  $2000
+  Category::Expense::State Taxes  $1000
+  Account::Reimbursement Receivables  -$2000
+  Account::Checking::Chase  $5788 ; GUSTO EBV 157780 PPD ID: 9138864003

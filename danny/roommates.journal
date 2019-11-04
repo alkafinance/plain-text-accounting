@@ -1,0 +1,20 @@
+
+# Today
+
+2019-11-04 100 Broderick, L WEB PMTS RPFSY WEB ID: 9000357878
+  Account::Checking::Chase  -$7418.32
+  Category::Money Out::Payment::Rent
+
+2019-11-18 Venmo
+  Account::Checking::Chase  $5788
+  Category::Money In::Transfer::Payroll
+
+
+# Next step
+
+2019-11-04 100 Broderick, L WEB PMTS RPFSY WEB ID: 9000357878
+  Account::Checking::Chase  -$7418.32
+  Accounts::Receivables From Friends  $5000
+  Category::Rent
+
+# 
