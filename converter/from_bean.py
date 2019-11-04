@@ -35,7 +35,7 @@ def account_from_entry(entry: bean.Open) -> models.Account:
 
 
 def commodity_from_entry(entry: bean.Commodity) -> models.Commodity:
-    return models.Commodity(entry.currency, entry.meta["name"], entry.currency)
+    return models.Commodity(entry.currency, None, entry.currency)
 
 
 def transaction_from_entry(entry: bean.Transaction) -> models.Transaction:
