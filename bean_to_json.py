@@ -4,7 +4,7 @@ from converter.models import ledger_to_dict
 from converter.utils import json_dumps_decimal
 from converter.from_bean import ledger_from_entries
 
-entries, errors, options = loader.load_file("./examples/example.beancount")
+entries, errors, options = loader.load_file("./examples/huge-example.beancount")
 
 ledger = ledger_from_entries(entries)
 

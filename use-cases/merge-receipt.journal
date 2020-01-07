@@ -1,0 +1,39 @@
+
+# Record a receipt, then have the transaction appear on bank
+
+## Receipt - separate
+
+2019-11-01 Receipt for CC purchase (Purchase date)
+  Money In Transit::Receipts  -$150
+  Expenses::Clothing  $150
+
+2019-11-03 Shows up on CC statement (Post date)
+  Money In Transit::Receipts  $150
+  Checking::Simple  -$150
+
+## Receipt - Combined
+
+2019-11-03 Spending from Simple -> Clothing
+  Expenses::Clothing  $150
+  Checking::Simple  -$150
+
+
+# Transfers
+
+## Transfers - Separate
+
+2019-11-01 SIMPLE XFERS CR XIAO TONY WEB ID: 27-1328799
+  Account::Checking::Chase  $1000
+  Account::Money In Transit  ; #inferred
+
+2019-11-02 Transfer to Chase - Checking 322271627
+  Account::Checking::Simple  -$1000
+  Account::Money In Transit  ; #inferred
+
+## Transfers (Combined)
+
+2019-11-01 Transfer $1,000 from Simple -> Chase
+  Account::Checking::Chase  $1000  ; 2019-11-02, SIMPLE XFERS CR XIAO TONY WEB ID: 27-1328799
+  Account::Checking::Simple  -$1000  ; 2019-11-01, Transfer to Chase - Checking 322271627
+
+

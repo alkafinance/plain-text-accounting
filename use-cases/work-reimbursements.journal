@@ -30,17 +30,16 @@
   Account::Checking::Simple  -$2000
   Account::Reimbursement Receivables  $2000
 
-
-2019-11-18 GUSTO EBV 157780 PPD ID: 9138864003
-  Account::Checking::Chase  $5788
-  Account::Money In Transit
-
 2019-11-18 Paystub for period Nov 1 - Nov 15
   Category::Income::Salary  -$6788
   Category::Expense::Federal Taxes  $2000
   Category::Expense::State Taxes  $1000
   Account::Reimbursement Receivables  -$2000
-  Account::Money In Transit
+  Account::Money In Transit  ; #inferred
+
+2019-11-18 GUSTO EBV 157780 PPD ID: 9138864003
+  Account::Checking::Chase  $5788
+  Account::Money In Transit  ; #inferred
 
 ## Step 2
 
