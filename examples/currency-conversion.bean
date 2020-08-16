@@ -23,7 +23,8 @@ option "operating_currency" "IDR"
   ; Equity:Rounding-Error
 
 
-; This is allowed due to booking method
+; This is allowed only if we use Cash-Short. Otherwise, we'll need
+; option "booking_method" "NONE"
 2020-03-01 * "Change for IDR with position in USD but in separate account to allow for negative inventory"
   Assets:Cash:IDR                         1400000. IDR  ; {0.000071428 USD} ; @ USD
   Assets:Cash-Short:USD                            -100.00 USD {IDR} ; {14000 IDR}
