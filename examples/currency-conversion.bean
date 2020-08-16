@@ -1,0 +1,42 @@
+; fava currency-conversion.bean -p 5551
+option "operating_currency" "USD"
+option "operating_currency" "IDR"
+
+2020-01-01 open Assets:Cash:USD
+2020-01-01 open Assets:Cash-Short:USD
+2020-01-01 open Assets:Cash:IDR
+2020-01-01 open Assets:Cash:CAD
+2020-01-01 open Equity:Initial-Balance
+2020-01-01 open Equity:Rounding-Error
+
+
+2020-03-01 * "Opening Balance"
+  Assets:Cash:USD                            1000.00 USD
+  Equity:Initial-Balance
+
+; Beancount Precision & Tolerances
+; https://docs.google.com/document/d/1lgHxUUEY-UVEgoF6cupz2f_7v7vEF7fiJyiSlYYlhOo/edit
+
+2020-03-01 * "Change for IDR with cost basis"
+  Assets:Cash:IDR                         1400000. IDR {USD}  ; {0.000071428 USD} ; @ USD
+  Assets:Cash:USD                            -100.00 USD ; {14000 IDR}
+  ; Equity:Rounding-Error
+
+
+; This is allowed due to booking method
+2020-03-01 * "Change for IDR with position in USD but in separate account to allow for negative inventory"
+  Assets:Cash:IDR                         1400000. IDR  ; {0.000071428 USD} ; @ USD
+  Assets:Cash-Short:USD                            -100.00 USD {IDR} ; {14000 IDR}
+
+
+; Balancing rule - weight of postings
+; https://docs.google.com/document/d/1wAMVrKIA2qtRGmoVDSUBJGmYZSygUaR0uOMW1GV3YE0/edit#heading=h.ud9ecmla2gf
+
+
+
+2020-03-01 * "Change for CAD with price only"
+  Assets:Cash:CAD                             260.00 CAD {0.7692307692307692 USD} @ 0.87 USD 
+  Assets:Cash:USD                            -200.00 USD
+
+
+
