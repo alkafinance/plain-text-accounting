@@ -22,6 +22,9 @@ option "operating_currency" "IDR"
   Assets:Cash:USD                            -100.00 USD ; {14000 IDR}
   ; Equity:Rounding-Error
 
+2020-03-01 * "Change for IDR with cost basis, cost 100% inferred"
+  Assets:Cash:IDR                         1400000. IDR {} ; Held at cost, with 
+  Assets:Cash:USD                            -100.00 USD
 
 ; This is allowed only if we use Cash-Short. Otherwise, we'll need
 ; option "booking_method" "NONE"
