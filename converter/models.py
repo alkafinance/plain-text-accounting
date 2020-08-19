@@ -311,6 +311,8 @@ class Price:
 class Flags:
     """Do not use for now"""
     cancelled: Optional[bool] = None
+    confirmed: Optional[bool] = None
+    follow_up: Optional[bool] = None
     pending: Optional[bool] = None
     transfer: Optional[bool] = None
 
@@ -318,13 +320,17 @@ class Flags:
     def from_dict(obj: Any) -> 'Flags':
         assert isinstance(obj, dict)
         cancelled = from_union([from_bool, from_none], obj.get("cancelled"))
+        confirmed = from_union([from_bool, from_none], obj.get("confirmed"))
+        follow_up = from_union([from_bool, from_none], obj.get("followUp"))
         pending = from_union([from_bool, from_none], obj.get("pending"))
         transfer = from_union([from_bool, from_none], obj.get("transfer"))
-        return Flags(cancelled, pending, transfer)
+        return Flags(cancelled, confirmed, follow_up, pending, transfer)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["cancelled"] = from_union([from_bool, from_none], self.cancelled)
+        result["confirmed"] = from_union([from_bool, from_none], self.confirmed)
+        result["followUp"] = from_union([from_bool, from_none], self.follow_up)
         result["pending"] = from_union([from_bool, from_none], self.pending)
         result["transfer"] = from_union([from_bool, from_none], self.transfer)
         return result

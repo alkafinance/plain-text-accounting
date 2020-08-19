@@ -166,11 +166,14 @@ export interface Transaction {
 
 export interface Flags {
   pending?: boolean | null
+  followUp?: boolean | null
+  confirmed?: boolean | null
+  // Hardly used
+  cancelled?: boolean | null
   // Can this be considered a transfer?
   transfer?: boolean | null
-
-  cancelled?: boolean | null
 }
+
 
 export interface Posting {
   date?: ISODateTime | ISODate

@@ -22,35 +22,31 @@ def ledger_from_entries(entries: bean.Entries) -> models.Ledger:
         elif isinstance(entry, bean.Price):
             prices.append(price_from_entry(entry))
 
-    ldgr = models.Ledger(
+    return models.Ledger(
         accounts=accounts,
         commodities=commodities,
         prices=prices,
         transactions=transactions,
         version=models.Version.STANDARD_1,
     )
-    return ldgr
 
 
 def account_from_entry(entry: bean.Open) -> models.Account:
-    acct = models.Account(name=entry.account)
-    return acct
-
+    return models.Account(name=entry.account)
 
 def commodity_from_entry(entry: bean.Commodity) -> models.Commodity:
-    comm = models.Commodity(unit=entry.currency)
-    return comm
+    return models.Commodity(unit=entry.currency)
 
 
 def price_from_entry(entry: bean.Price) -> models.Price:
-    prce = models.Price(
-        date=entry.date.isoformat(), quote=models.Amount(entry.amount.number, entry.amount.currency)
+    return models.Price(
+        date=entry.date.isoformat(),
+        quote=models.Amount(entry.amount.number, entry.amount.currency),
     )
-    return prce
 
 
 def transaction_from_entry(entry: bean.Transaction) -> models.Transaction:
-    txn = models.Transaction(
+    return models.Transaction(
         # entry.date,
         # from_single_char_flag(entry.flag),
         # "#id",
@@ -62,9 +58,11 @@ def transaction_from_entry(entry: bean.Transaction) -> models.Transaction:
         date=entry.date.isoformat(),
         description=entry.narration,
         payee=entry.payee,
+        flags=from_single_char_flag(entry.flag),
+        labels_map={
+            tag: True for tag in chain(entry.tags, map(lambda l: f"^{l}", entry.links))
+        },
     )
-
-    return txn
 
 
 def posting_from_entry(entry: bean.Posting) -> models.Posting:
@@ -76,9 +74,9 @@ def posting_from_entry(entry: bean.Posting) -> models.Posting:
     )
 
 
-# def from_single_char_flag(flag: str) -> models.Flags:
-#     return {
-#         "!": models.Flags.ACTIONABLE,
-#         "*": models.Flags.CONFIRMED,
-#         "?": models.Flags.NEW,
-#     }[flag]
+def from_single_char_flag(flag: str) -> models.Flags:
+    return {
+        "!": models.Flags(follow_up=True),
+        "*": models.Flags(confirmed=True),
+        "?": models.Flags(pending=True),
+    }[flag]
