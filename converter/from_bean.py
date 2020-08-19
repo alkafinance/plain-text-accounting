@@ -17,8 +17,8 @@ def ledger_from_entries(entries: bean.Entries) -> models.Ledger:
             accounts.append(account_from_entry(entry))
         elif isinstance(entry, bean.Commodity):
             commodities.append(commodity_from_entry(entry))
-        # elif isinstance(entry, bean.Transaction):
-        #     transactions.append(transaction_from_entry(entry))
+        elif isinstance(entry, bean.Transaction):
+            transactions.append(transaction_from_entry(entry))
         elif isinstance(entry, bean.Price):
             prices.append(price_from_entry(entry))
 
@@ -44,7 +44,7 @@ def commodity_from_entry(entry: bean.Commodity) -> models.Commodity:
 
 def price_from_entry(entry: bean.Price) -> models.Price:
     prce = models.Price(
-        date=entry.date, quote=models.Amount(entry.amount.number, entry.amount.currency)
+        date=entry.date.isoformat(), quote=models.Amount(entry.amount.number, entry.amount.currency)
     )
     return prce
 
@@ -59,11 +59,9 @@ def transaction_from_entry(entry: bean.Transaction) -> models.Transaction:
         # entry.payee,
         # list(map(posting_from_entry, entry.postings)),
         # list(entry.tags),
-        date=entry.date,
+        date=entry.date.isoformat(),
         description=entry.narration,
         payee=entry.payee,
-        labels_map={},
-        postings_map={},
     )
 
     return txn
