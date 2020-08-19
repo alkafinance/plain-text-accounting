@@ -1,3 +1,4 @@
+from lib import bean_to_json, json_to_bean
 
 def handle(request):
     """Responds to any HTTP request.
@@ -8,17 +9,19 @@ def handle(request):
         Response object using
         `make_response <http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response>`.
     """
-    request_json = request.get_json()
-    if request.args and 'message' in request.args:
-        return request.args.get('message')
-    elif request_json and 'message' in request_json:
-        return request_json['message']
-    else:
-        return f'Hello bye Ayan!'
+    if 'bean_to_json' in request.path:
+        data = request.get_data(as_text=True)
+        json_str, *_ = bean_to_json(data)
+        return json_str, {"Content-Type": "application/json"}
+    if 'json_to_bean' in request.path:
+        data = request.get_data(as_text=True)
+        bean_str, *_ = json_to_bean(data)
+        return bean_str, {"Content-Type": "application/vnd+beancount"}
+    return f'/json_to_bean or /bean_to_json!', 400
 
 
 if __name__ == '__main__':
     from flask import Flask, request
     app = Flask(__name__)
-    app.route('/')(lambda: handle(request))
+    app.route('/<path>', methods=['GET', 'POST'])(lambda path: handle(request))
     app.run()
