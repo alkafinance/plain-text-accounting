@@ -1,6 +1,4 @@
 beancount==2.2.1
 python-dateutil==2.7.5
-python-slugify==3.0.2
-dacite==1.0.0
 simplejson==3.16.0
 Flask==1.0
