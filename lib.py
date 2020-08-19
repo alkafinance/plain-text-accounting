@@ -6,6 +6,7 @@ from beancount.parser import printer
 from beancount import loader
 from operator import itemgetter
 
+import io
 import datetime
 import dateutil.parser
 import json
@@ -162,9 +163,9 @@ def unwrap_entry(data: dict) -> bean.Directive:
         return bean.Custom(meta, date, type=e["type"], values=e["values"])
 
 
-def bean_to_json(content: str):
-    entries, errors, options = loader.load_string(content)
-    return {
+def bean_to_json(bean_str: str):
+    entries, errors, options = loader.load_string(bean_str)
+    data = {
         "variant": "beancount",
         "version": "2.2.1",
         "entries": list(
@@ -173,10 +174,14 @@ def bean_to_json(content: str):
         "errors": errors,
         "options": options,
     }
+    return json_dumps_decimal(data), data
 
 
-def json_to_bean(json: dict):
-    entries = [unwrap_entry(data) for data in json["entries"]]
-    print(entries)
-    return entries
+def json_to_bean(json_str: dict):
+    data = json_load_decimal(json_str)
+    entries = [unwrap_entry(data) for data in data["entries"]]
+    buff = io.StringIO()
+    printer.print_entries(entries, dcontext=DISPLAY_CONTEXT, file=buff)
+    buff.seek(0)
+    return buff.read(), entries, data["errors"], data["options"]
 
