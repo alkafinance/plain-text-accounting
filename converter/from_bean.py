@@ -9,6 +9,7 @@ def ledger_from_entries(entries: bean.Entries) -> models.Ledger:
     accounts = []
     transactions = []
     commodities = []
+    prices = []
     tags = []  # need explicit declaration
 
     for entry in entries:
@@ -16,39 +17,56 @@ def ledger_from_entries(entries: bean.Entries) -> models.Ledger:
             accounts.append(account_from_entry(entry))
         elif isinstance(entry, bean.Commodity):
             commodities.append(commodity_from_entry(entry))
-        elif isinstance(entry, bean.Transaction):
-            transactions.append(transaction_from_entry(entry))
+        # elif isinstance(entry, bean.Transaction):
+        #     transactions.append(transaction_from_entry(entry))
+        elif isinstance(entry, bean.Price):
+            prices.append(price_from_entry(entry))
 
-    return models.Ledger(
-        accounts,
-        commodities,
-        date.fromisoformat("2000-01-01"),
-        "#id",
-        tags,
-        "",
-        transactions,
+    ldgr = models.Ledger(
+        accounts=accounts,
+        commodities=commodities,
+        prices=prices,
+        transactions=transactions,
+        version=models.Version.STANDARD_1,
     )
+    return ldgr
 
 
 def account_from_entry(entry: bean.Open) -> models.Account:
-    return models.Account(None, "#id", entry.date, entry.account)
+    acct = models.Account(name=entry.account)
+    return acct
 
 
 def commodity_from_entry(entry: bean.Commodity) -> models.Commodity:
-    return models.Commodity(entry.currency, None, entry.currency)
+    comm = models.Commodity(unit=entry.currency)
+    return comm
+
+
+def price_from_entry(entry: bean.Price) -> models.Price:
+    prce = models.Price(
+        date=entry.date, quote=models.Amount(entry.amount.number, entry.amount.currency)
+    )
+    return prce
 
 
 def transaction_from_entry(entry: bean.Transaction) -> models.Transaction:
-    return models.Transaction(
-        entry.date,
-        from_single_char_flag(entry.flag),
-        "#id",
-        list(entry.links),
-        entry.narration,
-        entry.payee,
-        list(map(posting_from_entry, entry.postings)),
-        list(entry.tags),
+    txn = models.Transaction(
+        # entry.date,
+        # from_single_char_flag(entry.flag),
+        # "#id",
+        # list(entry.links),
+        # entry.narration,
+        # entry.payee,
+        # list(map(posting_from_entry, entry.postings)),
+        # list(entry.tags),
+        date=entry.date,
+        description=entry.narration,
+        payee=entry.payee,
+        labels_map={},
+        postings_map={},
     )
+
+    return txn
 
 
 def posting_from_entry(entry: bean.Posting) -> models.Posting:
@@ -60,9 +78,9 @@ def posting_from_entry(entry: bean.Posting) -> models.Posting:
     )
 
 
-def from_single_char_flag(flag: str) -> models.Flag:
-    return {
-        "!": models.Flag.ACTIONABLE,
-        "*": models.Flag.CONFIRMED,
-        "?": models.Flag.NEW,
-    }[flag]
+# def from_single_char_flag(flag: str) -> models.Flags:
+#     return {
+#         "!": models.Flags.ACTIONABLE,
+#         "*": models.Flags.CONFIRMED,
+#         "?": models.Flags.NEW,
+#     }[flag]

@@ -39,8 +39,25 @@ def json_load_decimal(fp) -> Any:
 
 
 def json_dumps_decimal(obj):
-    return simplejson.dumps(obj, use_decimal=True)
+    return simplejson.dumps(clean_nones(obj), use_decimal=True)
 
+
+def clean_nones(value):
+    """
+    Recursively remove all None values from dictionaries and lists, and returns
+    the result as a new dictionary or list.
+    https://stackoverflow.com/questions/4255400/exclude-empty-null-values-from-json-serialization/4257279
+    """
+    if isinstance(value, list):
+        return [clean_nones(x) for x in value if x is not None]
+    elif isinstance(value, dict):
+        return {
+            key: clean_nones(val)
+            for key, val in value.items()
+            if val is not None
+        }
+    else:
+        return value
 
 DISPLAY_CONTEXT = DisplayContext()
 DISPLAY_CONTEXT.commas = True
