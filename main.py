@@ -1,5 +1,5 @@
 
-def hello_world(request):
+def handle(request):
     """Responds to any HTTP request.
     Args:
         request (flask.Request): HTTP request object.
@@ -14,11 +14,11 @@ def hello_world(request):
     elif request_json and 'message' in request_json:
         return request_json['message']
     else:
-        return f'Hello Ayan!'
+        return f'Hello bye Ayan!'
 
 
 if __name__ == '__main__':
     from flask import Flask, request
     app = Flask(__name__)
-    app.route('/')(lambda: hello_world(request))
+    app.route('/')(lambda: handle(request))
     app.run()
