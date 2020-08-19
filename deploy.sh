@@ -1,1 +1,1 @@
-gcloud functions deploy api --entry-point handle --runtime python37 --trigger-http --allow-unauthenticated
+gcloud functions deploy converter --entry-point handle --runtime python37 --trigger-http --allow-unauthenticated
