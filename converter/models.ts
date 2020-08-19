@@ -157,7 +157,7 @@ export interface Transaction {
   labelsMap?: Record<string, boolean>
 
   /** https://support.plaid.com/hc/en-us/articles/360008271814-Pending-transaction-overview */
-  pendingTransactionExternalId?: null
+  pendingTransactionExternalId?: string | null
 
   // TODO: Build abstraction to be able to express this in a
   // generic way for all objects
