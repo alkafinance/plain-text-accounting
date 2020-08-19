@@ -1,5 +1,5 @@
 from typing import Optional, Any, List, TypeVar, Type, cast, Callable
-from beancount.core.data import Decimal, D, Entries
+from beancount.core.    ta import Decimal, D, Entries
 from beancount.core import data as bean
 from beancount.core.display_context import DisplayContext
 from beancount.parser import printer
