@@ -21,3 +21,4 @@ README.md
 LICENSE
 *.sh
 #!include:.gitignore
+archive/**
