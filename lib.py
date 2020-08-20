@@ -62,35 +62,35 @@ def get_entry_type(entry: bean.Directive):
         return "Custom"
 
 
-def parseDate(d: str):
+def parse_date(d: str):
     if d is None:
         return d
     return dateutil.parser.parse(d).date()
 
 
-def parseAmount(d: dict) -> bean.Amount:
+def parse_amount(d: dict) -> bean.Amount:
     if d is None:
         return d
     return bean.Amount(number=d["number"], currency=d["currency"])
 
 
-def parseCost(c: dict) -> bean.Cost:
+def parse_cost(c: dict) -> bean.Cost:
     if c is None:
         return c
     return bean.Cost(
         number=c["number"],
         currency=c["currency"],
-        date=parseDate(c["date"]),
+        date=parse_date(c["date"]),
         label=c.get("label"),
     )
 
 
-def parsePosting(p: dict) -> bean.Posting:
+def parse_posting(p: dict) -> bean.Posting:
     return bean.Posting(
         account=p["account"],
-        units=parseAmount(p["units"]),
-        cost=parseCost(p["cost"] if "cost" in p else None),
-        price=parseAmount(p["price"] if "price" in p else None),
+        units=parse_amount(p["units"]),
+        cost=parse_cost(p["cost"] if "cost" in p else None),
+        price=parse_amount(p["price"] if "price" in p else None),
         flag=p.get("flag"),
         meta=p.get("meta"),
     )
@@ -103,7 +103,7 @@ def wrap_entry(entry: bean.Directive):
 def unwrap_entry(data: dict) -> bean.Directive:
     type, e = itemgetter("type", "entry")(data)
     meta = e.get("meta")
-    date = parseDate(e["date"])
+    date = parse_date(e["date"])
     if type == "Open":
         return bean.Open(
             meta,
@@ -125,7 +125,7 @@ def unwrap_entry(data: dict) -> bean.Directive:
             meta,
             date,
             account=e["account"],
-            amount=parseAmount(e["amount"]),
+            amount=parse_amount(e["amount"]),
             tolerance=e.get("tolerance"),
             diff_amount=e.get("diff_amount"),
         )
@@ -138,7 +138,7 @@ def unwrap_entry(data: dict) -> bean.Directive:
             narration=e["narration"],
             tags=set(e["tags"] if "tags" in e else []),
             links=set(e["links"] if "links" in e else []),
-            postings=[parsePosting(p) for p in e.get("postings", [])],
+            postings=[parse_posting(p) for p in e.get("postings", [])],
         )
     if type == "Note":
         return bean.Note(meta, date, account=e["account"], comment=e.get("comment", ""))
@@ -148,7 +148,7 @@ def unwrap_entry(data: dict) -> bean.Directive:
         return bean.Query(meta, date, name=e["name"], query_string=e["query_string"])
     if type == "Price":
         return bean.Price(
-            meta, date, currency=e["currency"], amount=parseAmount(e["amount"])
+            meta, date, currency=e["currency"], amount=parse_amount(e["amount"])
         )
     if type == "Document":
         return bean.Document(
