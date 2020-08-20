@@ -20,16 +20,20 @@ def handle(request):
         # header and caches preflight response for an 3600s
         return ('', 204, headers)
 
-    if 'bean_to_json' in request.path:
-        data = request.get_data(as_text=True)
-        json_str, *_ = bean_to_json(data)
-        headers["Content-Type"] = "application/json"
-        return json_str, headers
-    if 'json_to_bean' in request.path:
-        data = request.get_data(as_text=True)
-        bean_str, *_ = json_to_bean(data)
-        headers["Content-Type"] = "application/vnd+beancount"
-        return bean_str, headers
+    try:
+        if 'bean_to_json' in request.path:
+            data = request.get_data(as_text=True)
+            json_str, *_ = bean_to_json(data)
+            headers["Content-Type"] = "application/json"
+            return json_str, headers
+        if 'json_to_bean' in request.path:
+            data = request.get_data(as_text=True)
+            bean_str, *_ = json_to_bean(data)
+            headers["Content-Type"] = "application/vnd+beancount"
+            return bean_str, headers
+    except Exception as e:
+        return e.__str__(), 500, headers
+
     return f'/json_to_bean or /bean_to_json!', 400
 
 
