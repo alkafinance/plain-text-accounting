@@ -1,0 +1,9 @@
+; fava currency-conversion.bean -p 5551
+option "operating_currency" "USD"
+
+2020-01-01 open Assets:Cash:USD
+2020-01-01 open Equity:Initial-Balance
+
+2020-03-01 * "Opening Balance"
+  Assets:Cash:USD                            1000.00 USD
+  Equity:Initial-Balance
