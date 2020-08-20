@@ -24,4 +24,4 @@ if __name__ == '__main__':
     from flask import Flask, request
     app = Flask(__name__)
     app.route('/<path>', methods=['GET', 'POST'])(lambda path: handle(request))
-    app.run()
+    app.run(port=5552)
