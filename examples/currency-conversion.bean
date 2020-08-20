@@ -6,6 +6,7 @@ option "operating_currency" "IDR"
 2020-01-01 open Assets:Cash-Short:USD
 2020-01-01 open Assets:Cash:IDR
 2020-01-01 open Assets:Cash:CAD
+2020-01-01 open Assets:Cash:MXN
 2020-01-01 open Equity:Initial-Balance
 2020-01-01 open Equity:Rounding-Error
 
@@ -38,9 +39,12 @@ option "operating_currency" "IDR"
 
 
 
-2020-03-01 * "Change for CAD with price only"
+2020-03-01 * "Change for CAD with cost and price"
   Assets:Cash:CAD                             260.00 CAD {0.7692307692307692 USD} @ 0.87 USD 
   Assets:Cash:USD                            -200.00 USD
 
 
 
+2020-03-01 * "Change for MXN with price only"
+  Assets:Cash:MXN                             1500.00 MXN @ USD 
+  Assets:Cash:USD                            -50.00 USD
