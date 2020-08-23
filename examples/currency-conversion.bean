@@ -2,14 +2,7 @@
 option "operating_currency" "USD"
 option "operating_currency" "IDR"
 
-2020-01-01 open Assets:Cash:USD
-2020-01-01 open Assets:Cash-Short:USD
-2020-01-01 open Assets:Cash:IDR
-2020-01-01 open Assets:Cash:CAD
-2020-01-01 open Assets:Cash:MXN
-2020-01-01 open Equity:Initial-Balance
-2020-01-01 open Equity:Rounding-Error
-
+plugin "beancount.plugins.auto_accounts"
 
 2020-03-01 * "Opening Balance"
   Assets:Cash:USD                            1000.00 USD
