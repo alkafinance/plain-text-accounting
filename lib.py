@@ -1,6 +1,7 @@
 from typing import Any, Set
 from beancount.core.data import Decimal, D, Entries
 from beancount.core import data as bean
+from beancount.core import compare
 from beancount.core.display_context import DisplayContext
 from beancount.parser import printer
 from beancount import loader
@@ -97,7 +98,11 @@ def parse_posting(p: dict) -> bean.Posting:
 
 
 def wrap_entry(entry: bean.Directive):
-    return {"type": get_entry_type(entry), "entry": entry}
+    return {
+        "type": get_entry_type(entry),
+        "entry": entry,
+        "hash": compare.hash_entry(entry),
+    }
 
 
 def unwrap_entry(data: dict) -> bean.Directive:
@@ -168,9 +173,7 @@ def bean_to_json(bean_str: str):
     data = {
         "variant": "beancount",
         "version": "2.2.1",
-        "entries": list(
-            map(lambda e: {"type": get_entry_type(e), "entry": e}, entries)
-        ),
+        "entries": list(map(wrap_entry, entries)),
         "errors": errors,
         "options": options,
     }

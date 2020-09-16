@@ -1,0 +1,8 @@
+option "operating_currency" "USD"
+
+plugin "beancount.plugins.auto_accounts"
+
+
+2015-01-04 * "BANK FEES" "Monthly bank fee"
+  Assets:US:BofA:Checking                           -4.00 USD
+  Expenses:Financial:Fees                            4.00 USD
