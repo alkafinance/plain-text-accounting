@@ -13,9 +13,6 @@ command = parser.parse_args().command
 content = sys.stdin.read()
 
 if command == "bean_to_json":
-    if 'beancount.plugins.auto_accounts' not in content:
-        content = 'plugin "beancount.plugins.auto_accounts"\n' + content
-        
     json_str, *_ = bean_to_json(content)
     print(json_str)
 elif command == "json_to_bean":

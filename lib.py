@@ -169,6 +169,8 @@ def unwrap_entry(data: dict) -> bean.Directive:
 
 
 def bean_to_json(bean_str: str):
+    if 'beancount.plugins.auto_accounts' not in bean_str:
+        bean_str = 'plugin "beancount.plugins.auto_accounts"\n' + bean_str
     entries, errors, options = loader.load_string(bean_str)
     data = {
         "variant": "beancount",
