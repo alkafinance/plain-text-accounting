@@ -3,6 +3,12 @@ option "operating_currency" "USD"
 plugin "beancount.plugins.auto_accounts"
 
 
-2015-01-04 * "BANK FEES" "Monthly bank fee"
+2020-09-23 * "BANK FEES" "Monthly bank fee"
+  time: "00:21:46.505Z"
+  Assets:US:BofA:Checking                           -4.00 USD
+  Expenses:Financial:Fees                            4.00 USD
+
+2020-09-23T00:21:46.505Z * "BANK FEES" "Monthly bank fee"
+  time: "00:21:46.505Z"
   Assets:US:BofA:Checking                           -4.00 USD
   Expenses:Financial:Fees                            4.00 USD

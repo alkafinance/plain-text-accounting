@@ -185,8 +185,14 @@ def bean_to_json(bean_str: str):
 def json_to_bean(json_str: dict):
     data = json_load_decimal(json_str)
     entries = [unwrap_entry(data) for data in data["entries"]]
+    currs = data.get("options", {}).get("operating_currency", [])
+    options = '\n'.join([f'option "operating_currency" "{c}"' for c in currs])
+    if len(options) > 0:
+        options = options + '\n\n'
+
     buff = io.StringIO()
     printer.print_entries(entries, dcontext=DISPLAY_CONTEXT, file=buff)
     buff.seek(0)
-    return buff.read(), entries, data["errors"], data["options"]
+
+    return options + buff.read(), entries, data["errors"], data["options"]
 
