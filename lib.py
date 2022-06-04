@@ -81,7 +81,7 @@ def parse_cost(c: dict) -> bean.Cost:
     return bean.Cost(
         number=c["number"],
         currency=c["currency"],
-        date=parse_date(c["date"]),
+        date=parse_date(c.get("date")),
         label=c.get("label"),
     )
 
