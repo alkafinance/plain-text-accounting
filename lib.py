@@ -140,7 +140,7 @@ def unwrap_entry(data: dict) -> bean.Directive:
             date,
             flag=e["flag"],
             payee=e.get("payee"),
-            narration=e["narration"],
+            narration=e.get("narration", "<empty>"),
             tags=set(e["tags"] if "tags" in e else []),
             links=set(e["links"] if "links" in e else []),
             postings=[parse_posting(p) for p in e.get("postings", [])],
